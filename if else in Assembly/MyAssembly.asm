@@ -29,6 +29,52 @@ doit proc			; proc -- procedure
 	; ------------------------------ if else in Assembly ---------------------------------
 	;ref link:https://www.youtube.com/watch?v=BVOIBDwmOTM&list=PLRwVmtr-pp05c1HTBj1no6Fl6C6mlxYDG&index=46
 
+	;+ 2^0 * 2^1 + 2^2 * 2^3 + 2^4 * 2^5 + 2^6 +..... 2^n
+
+	;	 loop(ebx)		Power(power)	total(ecx)		totalHex
+;		2^1				2				2				2
+;		2^2				4				6				6
+;		2^3				8				48				30
+;		2^4				16				64				40
+;		2^5				32				2048			800
+;		2^6				64				2112			840
+
+	mov ebx, 2			; Base
+	;xor ecx, ecx		; 0 out ecx -- startout in zero erases the total
+	mov ecx, 1
+
+again:				; loop mul to add
+	; Repeat if necessary
+	cmp count, 5		
+	jl Done
+
+	call CalculateNextPower			; call is the same as jmp
+back1:
+	; Multiply the current power to the total
+	mov eax, power
+	mul ecx				; replace total to ecx
+	mov ecx, eax		; replace total to ecx
+
+	call CalculateNextPower
+back2:
+	; Add the power to total
+	add ecx, power
+
+	;; Repeat if necessary
+	;cmp count, 0		
+	;jl again
+
+Done:
+	ret
+
+;CalculateNextPower:
+;	; Next power:	; redundant code
+;	mov eax, power
+;	mul ebx			
+;	mov power, eax
+;	inc count
+;	;jmp back1			; BUG: theres back and back2 requires procedures
+;	ret
 
 
 
@@ -83,33 +129,33 @@ doit proc			; proc -- procedure
 ;		2^5				32				2048			800
 ;		2^6				64				2112			840
 
-	mov ebx, 2			; Base
-	;xor ecx, ecx		; 0 out ecx -- startout in zero erases the total
-	mov ecx, 1
-
-again:				; loop mul to add
-	; Repeat if necessary
-	cmp count, 5		
-	jl Done
-
-	call CalculateNextPower			; call is the same as jmp
-back1:
-	; Multiply the current power to the total
-	mov eax, power
-	mul ecx				; replace total to ecx
-	mov ecx, eax		; replace total to ecx
-
-	call CalculateNextPower
-back2:
-	; Add the power to total
-	add ecx, power
-
-	;; Repeat if necessary
-	;cmp count, 0		
-	;jl again
-
-Done:
-	ret
+;	mov ebx, 2			; Base
+;	;xor ecx, ecx		; 0 out ecx -- startout in zero erases the total
+;	mov ecx, 1
+;
+;again:				; loop mul to add
+;	; Repeat if necessary
+;	cmp count, 5		
+;	jl Done
+;
+;	call CalculateNextPower			; call is the same as jmp
+;back1:
+;	; Multiply the current power to the total
+;	mov eax, power
+;	mul ecx				; replace total to ecx
+;	mov ecx, eax		; replace total to ecx
+;
+;	call CalculateNextPower
+;back2:
+;	; Add the power to total
+;	add ecx, power
+;
+;	;; Repeat if necessary
+;	;cmp count, 0		
+;	;jl again
+;
+;Done:
+;	ret
 
 ;CalculateNextPower:
 ;	; Next power:	; redundant code
