@@ -12,7 +12,7 @@
 
 count dword 0		; ----- Assembly - Stack 1, 2 --------- Alternating Operations - Making the Loop Do All of the Work ----------------------------
 power dword 1		; ----- Assembly - Stack 1, 2--------- Alternating Operations - Making the Loop Do All of the Work ----------------------------
-
+evenOrOddCheckValue dword 2			; ----------- if else in Assembly ------------
 
 .code
 
@@ -28,6 +28,8 @@ doit proc			; proc -- procedure
 
 	; ------------------------------ if else in Assembly ---------------------------------
 	;ref link:https://www.youtube.com/watch?v=BVOIBDwmOTM&list=PLRwVmtr-pp05c1HTBj1no6Fl6C6mlxYDG&index=46
+	; % - mudole
+	; odd - 1%, even - 0%, use edx - remainder
 
 	;+ 2^0 * 2^1 + 2^2 * 2^3 + 2^4 * 2^5 + 2^6 +..... 2^n
 
@@ -46,23 +48,35 @@ doit proc			; proc -- procedure
 again:				; loop mul to add
 	; Repeat if necessary
 	cmp count, 5		
-	jl Done
+	je Done					; je - jumpequal
 
 	call CalculateNextPower			; call is the same as jmp
-back1:
+
+	; Check if we are at an even or odd power
+	mov eax, count
+	xor edx, edx
+	div evenOrOddCheckValue
+	cmp edx, 0
+	je DoAdd
+	jmp DoMultiply
+
+DoMultiply:
 	; Multiply the current power to the total
 	mov eax, power
-	mul ecx				; replace total to ecx
-	mov ecx, eax		; replace total to ecx
+	mul ecx				
+	mov ecx, eax	
+	jmp PopOut
 
 	call CalculateNextPower
-back2:
+
+DoAdd:
 	; Add the power to total
 	add ecx, power
+	jmp PopOut
 
-	;; Repeat if necessary
-	;cmp count, 0		
-	;jl again
+PopOut:
+	jmp again
+
 
 Done:
 	ret
