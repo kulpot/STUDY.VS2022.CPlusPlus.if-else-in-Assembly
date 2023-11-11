@@ -26,6 +26,26 @@ doit proc			; proc -- procedure
 	; proc -- procedure - outside assembly program call, 
 	; labels -- looks like proc with ":"  , can only be called inside assembly program, while doit proc is outside 
 
+	; ------------------------------ if else in Assembly ---------------------------------
+	;ref link:https://www.youtube.com/watch?v=BVOIBDwmOTM&list=PLRwVmtr-pp05c1HTBj1no6Fl6C6mlxYDG&index=46
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	; ------------------------------- Modulus ------------------------------------------------------
 	; ref link:https://www.youtube.com/watch?v=zBA-7mUzC-w&list=PLRwVmtr-pp05c1HTBj1no6Fl6C6mlxYDG&index=45
 	; % - mudole
